@@ -75,7 +75,13 @@ frontend  http-in
 #---------------------------------------------------------------------
 # round robin balancing between the various backends
 #---------------------------------------------------------------------
+<% if @backend_uri -%>    
+<% if @backend_servers -%>
 backend app
     balance     roundrobin
-    server  app1 192.168.0.1:8080 check
-    server  app2 192.168.0.2:8080 check
+    option httpchk GET <%= backend_uri -%> HTTP/1.0
+   <% backend_servers.each_with_index do |server, index| -%>
+ server  app<%= index -%> <%= server -%> check
+   <% end -%>    
+<% end -%>    
+<% end -%>    

@@ -35,7 +35,10 @@
 #
 # Copyright 2011 Your name here, unless otherwise noted.
 #
-class haproxy {
+class haproxy (
+ $backend_servers = undef,
+ $backend_uri     = undef
+) inherits haproxy::params {
   package { 'haproxy':
     ensure => 'installed',
   }
